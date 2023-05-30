@@ -9,17 +9,17 @@ import java.util.Optional;
 
 @Service
 public class BookService {
-    private final BookRepository br;
-    @Autowired
-    public BookService(BookRepository br){
-        this.br = br;
-    }
-
-    public Book addBook(Book addition){
-        return br.save(addition);
-    }
-
-    public Optional<Book> search(Long code){
-        return br.findById(code);
-    }
+//    private final BookRepository br;
+//    @Autowired
+//    public BookService(BookRepository br){
+//        this.br = br;
+//    }
+//
+//    public Book addBook(Book addition){
+//        return br.save(addition);
+//    }
+//
+//    public Optional<Book> search(Long code){
+//        return br.findById(code);
+//    }
 }

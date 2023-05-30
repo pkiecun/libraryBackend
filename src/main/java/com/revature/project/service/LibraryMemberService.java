@@ -10,20 +10,20 @@ import java.util.Optional;
 @Service
 public class LibraryMemberService {
 
-    private final LibraryMemberRepository lmr;
-
-    @Autowired
-    public LibraryMemberService(LibraryMemberRepository lmr){
-        this.lmr = lmr;
-    }
-
-    public Member register(Member guest){
-        return lmr.save(guest);
-    }
-
-    public Optional<Member> lookUpMember(Long customer){
-        return lmr.findById(customer);
-    }
+//    private final LibraryMemberRepository lmr;
+//
+//    @Autowired
+//    public LibraryMemberService(LibraryMemberRepository lmr){
+//        this.lmr = lmr;
+//    }
+//
+//    public Member register(Member guest){
+//        return lmr.save(guest);
+//    }
+//
+//    public Optional<Member> lookUpMember(Long customer){
+//        return lmr.findById(customer);
+//    }
 
 //    public LibraryMember updateLog(LibraryMember customer){
 //        return lmr.saveAndFlush(customer);
