@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Table(name = "libraries")
@@ -17,7 +18,7 @@ public class Library {
     @SequenceGenerator(allocationSize = 1, name = "library_id_seq")
     private Long id;
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ArrayList<Book> catalog;
+    private Set<Book> catalog;
     @OneToMany(mappedBy = "library", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ArrayList<LibraryMember> memberList;
+    private Set<Member> memberList;
 }

@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class LibraryMember {
+public class Member {
 
     @Id
     @GeneratedValue(generator = "member_id_seq", strategy = GenerationType.AUTO)
@@ -24,4 +24,7 @@ public class LibraryMember {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "library_id")
     private Library branch;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private Book borrowed;
 }

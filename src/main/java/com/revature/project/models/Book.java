@@ -23,4 +23,8 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "library_id")
     private Library branch;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id")
+    private Member customer;
 }
