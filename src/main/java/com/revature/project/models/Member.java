@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 //@Entity
 //@Table(name = "members")
@@ -25,28 +26,26 @@ public class Member {
     private String email;
 //    @ManyToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "library_id")
-    private Library branch;
+//    private Library branch;
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "book_id")
-    private ArrayList<Book> borrowed;
+    private ArrayList<Long> borrowed;
 
     public Member() {
     }
 
-    public Member(Long id, String name, String address, String email, Library branch) {
+    public Member(Long id, String name, String address, String email) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
-        this.branch = branch;
     }
 
-    public Member(Long id, String name, String address, String email, Library branch, ArrayList<Book> borrowed) {
+    public Member(Long id, String name, String address, String email, ArrayList<Long> borrowed) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
-        this.branch = branch;
         this.borrowed = borrowed;
     }
 
@@ -82,19 +81,25 @@ public class Member {
         this.email = email;
     }
 
-    public Library getBranch() {
-        return branch;
-    }
 
-    public void setBranch(Library branch) {
-        this.branch = branch;
-    }
-
-    public ArrayList<Book> getBorrowed() {
+    public ArrayList<Long> getBorrowed() {
         return borrowed;
     }
 
-    public void setBorrowed(ArrayList<Book> borrowed) {
+    public void setBorrowed(ArrayList<Long> borrowed) {
         this.borrowed = borrowed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return getId().equals(member.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

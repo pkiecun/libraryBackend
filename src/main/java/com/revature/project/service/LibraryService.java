@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 
-@Service
+//@Service
 public class LibraryService {
 //    private final LibraryRepository lr;
 //    @Autowired
@@ -30,18 +30,24 @@ public class LibraryService {
 
     public LibraryService() {
     }
-    public Optional<Member> checkRegistry(Library location,Member guest){
-        Optional<Member> actual = Optional.of(new Member());
-        for (Member verified: location.getMemberList()) {
-            if(verified.getId() == guest.getId()){
-                actual = Optional.of(verified);
-            }
-        }
-        return actual;
+//    public Optional<Member> checkRegistry(Library location,Member guest){
+//        Optional<Member> actual = Optional.of(new Member());
+//        for (Member verified: location.getMemberList()) {
+//            if(verified.getId() == guest.getId()){
+//                actual = Optional.of(verified);
+//            }
+//        }
+//        return actual;
+//    }
+public boolean checkRegistry(Library location,Member guest){
+    for (Member visit: location.getMemberList()) {
+        if(guest.getId() == visit.getId()){return true;}
+    }
+    return false;
     }
 
     public Library extendCatalog(Library location, Book edition){
-        if(location.getCatalog().contains(edition)) {
+        if(!location.getCatalog().contains(edition)) {
             ArrayList<Book> current = location.getCatalog();
             current.add(edition);
             location.setCatalog(current);
@@ -65,26 +71,26 @@ public class LibraryService {
     }
 
     public Library borrow(Library location, Member guest, Book edition){
-        if(checkRegistry(location, guest).isPresent()) {
+        if(checkRegistry(location, guest)) {
             if (location.getCatalog().contains(edition)) {
                 location.getCatalog().get(location.getCatalog().indexOf(edition)).setAvailable(false);
-                ArrayList<Book> ledger = location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed();
-                ledger.add(location.getCatalog().get(location.getCatalog().indexOf(edition)));
+                ArrayList<Long> ledger = location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed();
+                ledger.add(location.getCatalog().get(location.getCatalog().indexOf(edition)).getId());
                 location.getMemberList().get(location.getMemberList().indexOf(guest)).setBorrowed(ledger);
-                location.getCatalog().get(location.getCatalog().indexOf(edition)).setCustomer(guest);
                     }
             }
         return location;
     }
 
     public Library bookReturn(Library location, Member guest, Book edition){
-        if(checkRegistry(location, guest).isPresent()) {
+        if(checkRegistry(location, guest)) {
             if (location.getCatalog().contains(edition)) {
-                ArrayList<Book> ledger = location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed();
-                if (ledger.remove(edition)) {
+                int place = location.getCatalog().indexOf(edition);
+                ArrayList<Long> ledger = location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed();
+                if (ledger.contains(edition.getId())) {
+                    location.getCatalog().get(place).setAvailable(true);
+                    ledger.remove(edition.getId());
                     location.getMemberList().get(location.getMemberList().indexOf(guest)).setBorrowed(ledger);
-                    location.getCatalog().get(location.getCatalog().indexOf(edition)).setAvailable(true);
-                    location.getCatalog().get(location.getCatalog().indexOf(edition)).setCustomer(null);
                 }
             }
         }
@@ -92,6 +98,14 @@ public class LibraryService {
     }
 
     public ArrayList<Book> ledger(Library location, Member guest){
-        return location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed();
+        ArrayList<Book> result = new ArrayList<>();
+        for (Long id:location.getMemberList().get(location.getMemberList().indexOf(guest)).getBorrowed()) {
+            for (Book item: location.getCatalog()) {
+                if(id == item.getId()){
+                    result.add(item);
+                }
+            }
+        }
+        return result;
     }
 }

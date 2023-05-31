@@ -26,7 +26,7 @@ public class Book {
 
 //    @OneToOne(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "member_id")
-    private Member customer;
+    //private Member customer;
 
     private boolean available;
 
@@ -41,14 +41,14 @@ public class Book {
         this.available = available;
     }
 
-    public Book(Long id, String title, String author, Library branch, Member customer, boolean available) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.branch = branch;
-        this.customer = customer;
-        this.available = available;
-    }
+//    public Book(Long id, String title, String author, Library branch, Member customer, boolean available) {
+//        this.id = id;
+//        this.title = title;
+//        this.author = author;
+//        this.branch = branch;
+//      //  this.customer = customer;
+//        this.available = available;
+//    }
 
     public Long getId() {
         return id;
@@ -82,13 +82,13 @@ public class Book {
         this.branch = branch;
     }
 
-    public Member getCustomer() {
-        return customer;
-    }
+    //public Member getCustomer() {
+  //      return customer;
+  //  }
 
-    public void setCustomer(Member customer) {
-        this.customer = customer;
-    }
+   // public void setCustomer(Member customer) {
+    //    this.customer = customer;
+  //  }
 
     public boolean isAvailable() {
         return available;
